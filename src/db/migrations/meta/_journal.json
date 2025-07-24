@@ -8,6 +8,20 @@
       "when": 1753292106725,
       "tag": "0000_dizzy_yellow_claw",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753336175702,
+      "tag": "0001_optimal_revanche",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753338501951,
+      "tag": "0002_red_microbe",
+      "breakpoints": true
     }
   ]
 }

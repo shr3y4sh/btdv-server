@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ForbiddenError, ValidationError } from "./error.js";
+import { ForbiddenError, NotFoundError, ValidationError } from "./error.js";
 
 export const errorHandler = (
 	err: unknown,
@@ -15,8 +15,12 @@ export const errorHandler = (
 	}
 
 	if (err instanceof ForbiddenError) {
-		res.status(403).json({ error: "" });
+		res.status(403).json({ error: "Forbidden" });
 		return;
+	}
+
+	if (err instanceof NotFoundError) {
+		res.status(404).json({ error: "Not Found" });
 	}
 
 	res.status(500).json({ error: "Something went wrong on our end" });
