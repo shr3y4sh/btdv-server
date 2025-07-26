@@ -6,6 +6,7 @@ type ApiConfig = {
 	fileServerHits: number;
 	db: DBConfig;
 	platform: string;
+	jwtSecret: string;
 };
 
 type DBConfig = {
@@ -26,6 +27,7 @@ export const config: ApiConfig = {
 	fileServerHits: 0,
 	db: dbConfig,
 	platform: envOrThrow(process.env.PLATFORM),
+	jwtSecret: envOrThrow(process.env.JWT_SECRET),
 };
 
 export function envOrThrow(text: unknown): string {

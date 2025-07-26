@@ -10,7 +10,7 @@ export function middlewareLogResponses(
 	res.on("finish", () => {
 		const { statusCode } = res;
 
-		if (statusCode !== 200) {
+		if (statusCode >= 400) {
 			console.log(`[NON-OK] ${method} ${url} - Status: ${statusCode}`);
 		}
 	});

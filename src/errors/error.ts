@@ -14,3 +14,13 @@ export class ForbiddenError extends Error {
 		super(message);
 	}
 }
+export class UnauthorizedError extends Error {
+	constructor(message: string) {
+		super(message);
+	}
+}
+export class InvalidTokenError extends UnauthorizedError {
+	constructor(message: string) {
+		super(message);
+	}
+}

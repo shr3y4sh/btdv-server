@@ -1,13 +1,31 @@
 import { Request, Response } from "express";
-import { ValidationError } from "../../errors/error.js";
+import { InvalidTokenError, ValidationError } from "../../errors/error.js";
 import { createChirp } from "../../db/queries/chirps.js";
 import { NewChirp } from "../../schema.js";
+import { getBearerToken } from "../../middlewares/bearertoken.js";
+import { validateJWT } from "../../utils/jsonwebtoken.js";
+import { config } from "../../config/config.js";
 
 export async function handlerCreateChirp(
-	req: Request<unknown, unknown, requestBody>,
+	req: Request<any, any, requestBody>,
 	res: Response<NewChirp>
 ) {
-	const { body, userId } = req.body;
+	const token = getBearerToken(req);
+
+	let userId;
+
+	try {
+		userId = validateJWT(token, config.jwtSecret);
+	} catch (err) {
+		console.error(err);
+		throw new InvalidTokenError("Invalid/expired JWT token");
+	}
+
+	if (!userId) {
+		throw new InvalidTokenError("userId invalid");
+	}
+
+	const { body } = req.body;
 
 	const cleanBody = validateChirp(body);
 
@@ -36,5 +54,4 @@ function validateChirp(body: string): string {
 
 type requestBody = {
 	body: string;
-	userId: string;
 };

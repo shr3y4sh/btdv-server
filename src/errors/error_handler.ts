@@ -1,5 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { ForbiddenError, NotFoundError, ValidationError } from "./error.js";
+import {
+	ForbiddenError,
+	InvalidTokenError,
+	NotFoundError,
+	UnauthorizedError,
+	ValidationError,
+} from "./error.js";
 
 export const errorHandler = (
 	err: unknown,
@@ -11,6 +17,17 @@ export const errorHandler = (
 
 	if (err instanceof ValidationError) {
 		res.status(400).json({ error: "Chirp is too long. Max length is 140" });
+		return;
+	}
+
+	if (err instanceof UnauthorizedError) {
+		let error = "Incorrect email or password";
+
+		if (err instanceof InvalidTokenError) {
+			error = "Invalid/expired token";
+		}
+
+		res.status(401).json({ error });
 		return;
 	}
 
