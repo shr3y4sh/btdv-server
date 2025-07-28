@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import {
+	ApiKeyNotFoundError,
 	ForbiddenError,
 	InvalidTokenError,
 	NotFoundError,
@@ -27,6 +28,10 @@ export const errorHandler = (
 			error = "Invalid/expired token";
 		}
 
+		if (err instanceof ApiKeyNotFoundError) {
+			error = "Api key invalid/not found";
+		}
+
 		res.status(401).json({ error });
 		return;
 	}
@@ -38,6 +43,7 @@ export const errorHandler = (
 
 	if (err instanceof NotFoundError) {
 		res.status(404).json({ error: "Not Found" });
+		return;
 	}
 
 	res.status(500).json({ error: "Something went wrong on our end" });

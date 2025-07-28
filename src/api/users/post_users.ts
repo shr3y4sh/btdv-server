@@ -17,7 +17,7 @@ export async function handlerCreateUser(
 
 	const user = await createUser(newUser);
 
-	const { email, id, createdAt, updatedAt } = user;
+	const { email, id, createdAt, updatedAt, isChirpyRed } = user;
 
-	res.status(201).json({ id, email, createdAt, updatedAt });
+	res.status(201).json({ id, email, createdAt, updatedAt, isChirpyRed });
 }

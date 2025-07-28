@@ -1,16 +1,35 @@
 import { Request, Response } from "express";
-import { findChirpById, getAllChirps } from "../../db/queries/chirps.js";
+import {
+	findChirpById,
+	getAllChirps,
+	getChirpsByAuthor,
+} from "../../db/queries/chirps.js";
 import { NewChirp } from "../../schema.js";
 import { NotFoundError } from "../../errors/error.js";
 
 export async function handlerGetChirps(
-	_req: Request,
+	req: Request,
 	res: Response<Array<NewChirp>>
 ) {
-	const chirps = await getAllChirps();
+	const authorId = req.query["authorId"];
+
+	const sortVal = req.query["sort"];
+
+	let chirps: NewChirp[];
+
+	if (typeof authorId === "string") {
+		chirps = await getChirpsByAuthor(authorId);
+	} else {
+		chirps = await getAllChirps();
+	}
+
+	if (sortVal === "desc") {
+		chirps.sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
+	} else {
+		chirps.sort((a, b) => a.createdAt!.getTime() - b.createdAt!.getTime());
+	}
 
 	res.status(200).json(chirps);
-	res.end();
 }
 
 export async function handlerGetChirpById(

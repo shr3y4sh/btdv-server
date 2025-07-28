@@ -7,6 +7,7 @@ type ApiConfig = {
 	db: DBConfig;
 	platform: string;
 	jwtSecret: string;
+	polkaApiKey: string;
 };
 
 type DBConfig = {
@@ -28,6 +29,7 @@ export const config: ApiConfig = {
 	db: dbConfig,
 	platform: envOrThrow(process.env.PLATFORM),
 	jwtSecret: envOrThrow(process.env.JWT_SECRET),
+	polkaApiKey: envOrThrow(process.env.POLKA_KEY),
 };
 
 export function envOrThrow(text: unknown): string {

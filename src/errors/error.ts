@@ -24,3 +24,9 @@ export class InvalidTokenError extends UnauthorizedError {
 		super(message);
 	}
 }
+
+export class ApiKeyNotFoundError extends UnauthorizedError {
+	constructor(message: string) {
+		super(message);
+	}
+}

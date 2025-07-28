@@ -43,6 +43,13 @@
       "when": 1753555238365,
       "tag": "0005_premium_shiva",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1753629700004,
+      "tag": "0006_aspiring_radioactive_man",
+      "breakpoints": true
     }
   ]
 }

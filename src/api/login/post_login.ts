@@ -29,7 +29,7 @@ export async function handlerLogin(
 
 	const refreshToken = makeRefreshToken();
 
-	const { id, createdAt, updatedAt } = user;
+	const { id, createdAt, updatedAt, isChirpyRed } = user;
 
 	await createRefreshToken(refreshToken, id);
 
@@ -38,6 +38,7 @@ export async function handlerLogin(
 		email,
 		createdAt,
 		updatedAt,
+		isChirpyRed,
 		token,
 		refreshToken,
 	});

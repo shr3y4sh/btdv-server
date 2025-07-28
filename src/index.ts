@@ -20,6 +20,9 @@ import {
 import { handlerLogin } from "./api/login/post_login.js";
 import { handlerRefresh } from "./api/refresh/post_refresh.js";
 import { handlerRevoke } from "./api/revoke/post_revoke.js";
+import { handlerUpdateUser } from "./api/users/put_users.js";
+import { handlerDeleteChirp } from "./api/chirps/delete_chirps.js";
+import { handlerUpgradeUser } from "./api/polka/webhooks/post_upgrade_user.js";
 
 const app = express();
 const PORT = 8080;
@@ -57,9 +60,34 @@ app.get("/api/chirps/:id", async (req, res, next) => {
 		next(err);
 	}
 });
+
+app.delete("/api/chirps/:id", async (req, res, next) => {
+	try {
+		await handlerDeleteChirp(req, res);
+	} catch (error) {
+		next(error);
+	}
+});
+
+app.post("/api/polka/webhooks", async (req, res, next) => {
+	try {
+		await handlerUpgradeUser(req, res);
+	} catch (err) {
+		next(err);
+	}
+});
+
 app.post("/api/users", async (req, res, next) => {
 	try {
 		await handlerCreateUser(req, res);
+	} catch (err) {
+		next(err);
+	}
+});
+
+app.put("/api/users", async (req, res, next) => {
+	try {
+		await handlerUpdateUser(req, res);
 	} catch (err) {
 		next(err);
 	}
